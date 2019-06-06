@@ -2,21 +2,28 @@ import React, { Component } from "react";
 import "./App.css";
 import { Button } from "./Components/Button";
 import { Input } from "./Components/Input";
-import { ClearButton } from './Components/ClearButton';
+import { ClearButton } from "./Components/ClearButton";
+import * as math from "mathjs";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      input: ''
-    }
+      input: ""
+    };
   }
 
-//ES6 format allows you to skip manually binding function to the state and gives it a cleaner look 
+  //ES6 format allows you to skip manually binding function to the state and gives it a cleaner look
   addToInput = value => {
     this.setState({ input: this.state.input + value });
-  }
+  };
+
+
+  // Used this library https://mathjs.org/ to handle the math functionality
+  handleEqual = () => {
+    this.setState({ input: math.eval(this.state.input) });
+  };
 
   render() {
     return (
@@ -33,7 +40,7 @@ class App extends Component {
             <Button handleClick={this.addToInput}>4</Button>
             <Button handleClick={this.addToInput}>5</Button>
             <Button handleClick={this.addToInput}>6</Button>
-            <Button handleClick={this.addToInput}>X</Button>
+            <Button handleClick={this.addToInput}>*</Button>
           </div>
           <div className="row">
             <Button handleClick={this.addToInput}>1</Button>
@@ -44,11 +51,13 @@ class App extends Component {
           <div className="row">
             <Button handleClick={this.addToInput}>.</Button>
             <Button handleClick={this.addToInput}>0</Button>
-            <Button handleClick={this.addToInput}>=</Button>
+            <Button handleClick={() => this.handleEqual()}>=</Button>
             <Button handleClick={this.addToInput}>-</Button>
           </div>
           <div className="row">
-          <ClearButton handleClear={() => this.setState({input: ''})}>Clear</ClearButton>
+            <ClearButton handleClear={() => this.setState({ input: "" })}>
+              Clear
+            </ClearButton>
           </div>
         </div>
       </div>
